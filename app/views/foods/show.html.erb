@@ -1,0 +1,13 @@
+
+<h3>詳細</h3>
+<div class="tweet">
+  <p><%= @food.body %></p>
+  <p><%= @food.created_at %></p>
+</div>
+
+<% @food.tags.each do |tag| %>
+  <span><%= tag.name %></span>
+<% end %>
+
+<%= link_to "Tweet一覧に戻る", foods_path %>
+<%= link_to "編集する", edit_food_path(@food.id) %>
