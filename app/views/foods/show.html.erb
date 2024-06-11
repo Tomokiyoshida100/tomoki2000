@@ -1,8 +1,24 @@
 
 <h3>詳細</h3>
 <div class="tweet">
-  <p><%= @food.body %></p>
-  <p><%= @food.created_at %></p>
+<%= @food.name %>
+<br>
+            <%= @food.genre %>
+            <br>
+            <%= @food.body %>
+            <br>
+            <%= @food.created_at %>
+            <div>
+              <h2>総合評価：
+              <span class="star-rating">
+                <span class="star-rating-front" style="width: <%= getPercent(@food.overall) %>%;">★★★★★</span>
+                <span class="star-rating-back">★★★★★</span>
+              </span> 
+              </h2>
+              </div>
+            <%= link_to "編集する", edit_food_path(@food.id) %>
+            <%= button_to "削除する", food_path(@food.id), method: :delete %>
+            <%= image_tag @food.image_url, size: "250x200" if @food.image? %>
 </div>
 
 <% @food.tags.each do |tag| %>
@@ -10,4 +26,4 @@
 <% end %>
 
 <%= link_to "Tweet一覧に戻る", foods_path %>
-<%= link_to "編集する", edit_food_path(@food.id) %>
+

@@ -1,0 +1,66 @@
+<h1>マイページ</h1>
+<p>名前 : <%= @user.name %></p>
+<p>メールアドレス : <%= @user.email %></p>
+<p>プロフィール : <%= @user.profile %></p>
+
+<% if current_user.id == @user.id %>
+  <%= link_to "編集する", edit_user_registration_path %>
+  <%= link_to "投稿一覧に戻る", foods_path %>
+
+<% end %>
+
+<h2>ユーザーの投稿一覧</h2>
+
+<div class=travel>
+<div class="foods-container">
+        <h2><span class="shadow">Foods</span></h2>
+        <% @user.foods.select { |food| food.genre == 'food' }.each do |food| %>
+            <div class="box">
+            <div class="food">
+            <%= link_to food.user.name, user_path(food.user.id) %>            
+            <%= food.name %>
+            <%= food.created_at %>
+            <h2>総合評価：
+              <span class="star-rating">
+                <span class="star-rating-front" style="width: <%= getPercent(food.overall) %>%;">★★★★★</span>
+                <span class="star-rating-back">★★★★★</span>
+              </span> 
+            </h2>
+            <%= food.body %>
+            <br>
+            <%= link_to "詳細へ", food_path(food.id) %>
+            <%= link_to "編集する", edit_food_path(food.id) %>
+            <%= button_to "削除する", food_path(food.id), method: :delete %>
+            <%= image_tag food.image_url, size: "250x200" if food.image? %>
+          </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="spots-container">
+        <h2><span class="shadow2">Spots</span></h2>
+         <% @user.foods.select { |food| food.genre == 'spot' }.each do |spot| %>
+            <div class="box">
+            <div class="spot">
+            <%= link_to spot.user.name, user_path(spot.user.id) %>           
+            <%= spot.name %>
+            <%= spot.genre %>
+            <%= spot.created_at %>
+            <h2>総合評価：
+              <span class="star-rating">
+                <span class="star-rating-front" style="width: <%= getPercent(spot.overall) %>%;">★★★★★</span>
+                <span class="star-rating-back">★★★★★</span>
+              </span> 
+            </h2>
+            <%= spot.body %>
+            <br>
+            <%= link_to "詳細へ", food_path(spot.id) %>
+            <%= link_to "編集する", edit_food_path(spot.id) %>
+            <%= button_to "削除する", food_path(spot.id), method: :delete %>
+            <%= image_tag spot.image_url, size: "250x200" if spot.image? %>
+          </div>
+          </div>
+         <% end %>
+      </div>
+      </div>
+      <br>

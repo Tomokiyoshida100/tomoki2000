@@ -29,6 +29,7 @@ class FoodsController < ApplicationController
     
       def create
         food = Food.new(food_params)
+        food.user_id = current_user.id
         if food.save!
           redirect_to :action => "index"
         else
@@ -60,7 +61,23 @@ class FoodsController < ApplicationController
 
       private
     def food_params
-        params.require(:food).permit(:name, :genre, :body, :image,:body, tag_ids: [])
+        params.require(:food).permit(:name, :genre, :body, :overall, :image,:body, tag_ids: [])
     end
      
 end
+
+  def rate
+    @food.update(rating_params)
+    redirect_to @food, notice: 'Rating was successfully updated.'
+  end
+
+  private
+
+  def set_post
+    @food = Food.find(params[:id])
+  end
+
+  def rating_params
+    params.require(:food).permit(:rating)
+  end
+

@@ -1,9 +1,43 @@
 
 <div class="top">
   <div class="top-image">
-  <%= image_tag "IMG_6791.jpeg" %>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Web Design</title>
+      <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+      <div class="container">
+          <div class="photo">
+              <div class="slide">
+                  <h1>Hometown Hideaways</h1>
+                  <p>For those looking for local charm.</p>
+              </div>
+          </div>
+          <div class="white-boxes">
+              <div class="white-box">
+                  <h2>Sharing the local charm</h2>
+                  <p>Share the charm of your hometown. This site allows you to share recommended spots and local gourmet food using the posting function.</p>
+              </div>
+              <div class="white-box">
+                  <h2>Discover new attractions</h2>
+                  <p>This site provides new attractions and useful information for your destination.</p>
+              </div>
+          </div>
+        
+      </div>
+  </body>
+  </html>
+  
   </div>
 </div>
+
+<% if user_signed_in? %>
+  <a class="btn" href="<%= user_path(current_user.id) %>"><span>マイページへ</span><span>Click</span></a>
+<% end %>
 
 <h3>投稿を検索</h3>
  <%= form_tag({controller:"foods",action:"index"}, method: :get) do %>
@@ -19,37 +53,64 @@
 <% end %>
 
 <h3>一覧ページ</h3>
-<%= link_to "新規投稿へ", new_food_path %>
+<%= link_to("新規投稿へ", new_food_path, {class: "nav-link"} ) %>
 <div class=travel>
-<div class="foods-container">
-  <h2>Foods</h2>
-  <% @foods.select { |food| food.genre == 'food' }.each do |food| %>
-    <div class="food">
-      <%= food.name %>
-      <%= food.genre %>
-      <%= food.body %>
-      <%= food.created_at %>
-      <%= link_to "詳細へ", food_path(food.id) %>
-      <%= link_to "編集する", edit_food_path(food.id) %>
-      <%= button_to "削除する", food_path(food.id), method: :delete %>
-      <%= image_tag food.image_url, size: "250x200" if food.image? %>
-    </div>
-  <% end %>
-</div>
+      <div class="foods-container">
+        <h2><span class="shadow">Foods</span></h2>
+        <% @foods.select { |food| food.genre == 'food' }.each do |food| %>
+          <div class="box">
+          <div class="food">
+            <%= link_to food.user.name, user_path(food.user.id) %>            
+            <%= food.name %>
+            <br>
+            <%= food.created_at %>
+            <div>
+              <h2>総合評価：
+              <span class="star-rating">
+                <span class="star-rating-front" style="width: <%= getPercent(food.overall) %>%;">★★★★★</span>
+                <span class="star-rating-back">★★★★★</span>
+              </span> 
+              </h2>
+              </div>
+            <%= food.body %>
+            <br>
+            <%= link_to "詳細へ", food_path(food.id) %>
+            <%= link_to "編集する", edit_food_path(food.id) %>
+            <%= button_to "削除する", food_path(food.id), method: :delete %>
+            <%= image_tag food.image_url, size: "250x200" if food.image? %>
+          </div>
+          </div>
+        <% end %>
+      </div>
 
-<div class="spots-container">
-  <h2>Spots</h2>
-  <% @foods.select { |food| food.genre == 'spot' }.each do |spot| %>
-    <div class="spot">
-      <%= spot.name %>
-      <%= spot.genre %>
-      <%= spot.body %>
-      <%= spot.created_at %>
-      <%= link_to "詳細へ", food_path(spot.id) %>
-      <%= link_to "編集する", edit_food_path(spot.id) %>
-      <%= button_to "削除する", food_path(spot.id), method: :delete %>
-      <%= image_tag spot.image_url, size: "250x200" if spot.image? %>
-    </div>
-  <% end %>
-</div>
+      <div class="spots-container">
+        <h2><span class="shadow2">Spots</span></h2>
+         <% @foods.select { |food| food.genre == 'spot' }.each do |spot| %>
+          <div class="box">
+           <div class="spot">
+            <%= link_to spot.user.name, user_path(spot.user.id) %>           
+            <%= spot.name %>
+            <br>
+            <%= spot.created_at %>
+            <div>
+            <h2>総合評価：
+            <span class="star-rating">
+              <span class="star-rating-front" style="width: <%= getPercent(spot.overall) %>%;">★★★★★</span>
+              <span class="star-rating-back">★★★★★</span>
+            </span> 
+            </h2>
+            </div>
+            <%= spot.body %>
+            <br>
+            <%= link_to "詳細へ", food_path(spot.id) %>
+            <%= link_to "編集する", edit_food_path(spot.id) %>
+            <%= button_to "削除する", food_path(spot.id), method: :delete %>
+            <%= image_tag spot.image_url, size: "250x200" if spot.image? %>
+          </div>
+          </div>
+         <% end %>
+        </div>
+      </div>
+<div class="rateoya">
+  <div class="rate"></div>
 </div>
