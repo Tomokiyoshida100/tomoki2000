@@ -15,7 +15,7 @@
     "webpack-cli": "^3.3.12"
   },
   "engines": {
-    "node": "21.7.3"
+    "node": "16.13.0"
   },
   "scripts": {
     "dev": "NODE_OPTIONS='--openssl-legacy-provider' nuxt",
