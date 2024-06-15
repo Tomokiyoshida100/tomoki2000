@@ -11,35 +11,41 @@
   </head>
   <body>
       <div class="container">
-          <div class="photo">
-              <div class="slide">
-                  <h1>Hometown Hideaways</h1>
-                  <p>For those looking for local charm.</p>
-              </div>
+        <div class="photo">
+          <div class="slide">
+            <div class="h1:after">
+              <h1>Hometown Hideaways</h1>
+            </div>
+            <p>For those looking for local charm.</p>
           </div>
-          <div class="white-boxes">
-              <div class="white-box">
-                  <h2>Sharing the local charm</h2>
-                  <p>Share the charm of your hometown. This site allows you to share recommended spots and local gourmet food using the posting function.</p>
-              </div>
-              <div class="white-box">
-                  <h2>Discover new attractions</h2>
-                  <p>This site provides new attractions and useful information for your destination.</p>
-              </div>
+        </div>
+        <div class="white-boxes">
+          <div class="white-box">
+            <h2>Sharing the local charm</h2>
+            <p>Share the charm of your hometown. This site allows you to share recommended spots and local gourmet food using the posting function.</p>
           </div>
-        
+          <div class="white-box">
+            <h2>Discover new attractions</h2>
+            <p>This site provides new attractions and useful information for your destination.</p>
+          </div>
+        </div>
+        <div class="photo_container">
+          <div class="photo_2">
+          </div>
+          <div class="photo_3">
+          </div>
+        </div>
       </div>
   </body>
   </html>
-  
   </div>
 </div>
+
 
 <% if user_signed_in? %>
   <a class="btn" href="<%= user_path(current_user.id) %>"><span>マイページへ</span><span>Click</span></a>
 <% end %>
-
-<h3>投稿を検索</h3>
+<h2>投稿を検索</h2>
  <%= form_tag({controller:"foods",action:"index"}, method: :get) do %>
    <%= text_field_tag :search %>
    <%= submit_tag '検索する'  %>
@@ -52,13 +58,14 @@
   <%= submit_tag '検索' %>
 <% end %>
 
-<h3>一覧ページ</h3>
+<h2>一覧ページ</h2>
 <%= link_to("新規投稿へ", new_food_path, {class: "nav-link"} ) %>
 <div class=travel>
       <div class="foods-container">
-        <h2><span class="shadow">Foods</span></h2>
+        <h5><span class="shadow">Foods</span></h5>
         <% @foods.select { |food| food.genre == 'food' }.each do |food| %>
           <div class="box">
+          <%= image_tag food.user.image_url, size: "45x50" if food.user.image? %>
           <div class="food">
             <%= link_to food.user.name, user_path(food.user.id) %>            
             <%= food.name %>
@@ -84,9 +91,10 @@
       </div>
 
       <div class="spots-container">
-        <h2><span class="shadow2">Spots</span></h2>
+        <h5><span class="shadow2">Spots</span></h5>
          <% @foods.select { |food| food.genre == 'spot' }.each do |spot| %>
           <div class="box">
+          <%= image_tag spot  .user.image_url, size: "45x50" if spot.user.image? %>
            <div class="spot">
             <%= link_to spot.user.name, user_path(spot.user.id) %>           
             <%= spot.name %>

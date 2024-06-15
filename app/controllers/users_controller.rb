@@ -8,6 +8,6 @@ class UsersController < ApplicationController
         end
         @foods.uniq!
       end
-
+      
     end
   end

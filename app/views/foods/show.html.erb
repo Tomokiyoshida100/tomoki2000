@@ -1,10 +1,8 @@
 
-<h3>詳細</h3>
+<h1>詳細ページ</h1>
 <div class="tweet">
 <%= @food.name %>
 <br>
-            <%= @food.genre %>
-            <br>
             <%= @food.body %>
             <br>
             <%= @food.created_at %>
@@ -16,14 +14,11 @@
               </span> 
               </h2>
               </div>
+            <%= image_tag @food.image_url, size: "250x200" if @food.image? %>
+            <br>
             <%= link_to "編集する", edit_food_path(@food.id) %>
             <%= button_to "削除する", food_path(@food.id), method: :delete %>
-            <%= image_tag @food.image_url, size: "250x200" if @food.image? %>
 </div>
-
-<% @food.tags.each do |tag| %>
-  <span><%= tag.name %></span>
-<% end %>
 
 <%= link_to "Tweet一覧に戻る", foods_path %>
 

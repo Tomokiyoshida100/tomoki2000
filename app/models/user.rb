@@ -7,5 +7,6 @@ class User < ApplicationRecord
          has_many :foods, dependent: :destroy #追記 ユーザーが削除されたら、ツイートも削除されるようになります。すでに書いてある場合は追記しなくて大丈夫です。
   validates :name, presence: true #追記
   validates :profile, length: { maximum: 200 } #追記
+  mount_uploader :image, ImageUploader
 end
 
