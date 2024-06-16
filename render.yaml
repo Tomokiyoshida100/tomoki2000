@@ -1,0 +1,22 @@
+databases:
+  - name: tomoki2000_DB
+    databaseName: tomoki2000_db
+    user: tomoki2000
+    region: singapore
+
+services:
+  - type: web
+    name: tomoki2000
+    env: ruby
+    region: singapore
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tomoki2000_DB
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+
